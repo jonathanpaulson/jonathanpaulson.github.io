@@ -4,6 +4,14 @@ layout: post
 ---
 
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    processEscapes: true
+  }
+});
+</script>
 
 # String Hashing
 String equality can be implemented in constant time. strcmp can be implemented in log(n) time. This is pretty cool, since computer scientists will tell you this is provably impossible. It's also pretty useful if you want to do anything with strings ever. So let's do it:
