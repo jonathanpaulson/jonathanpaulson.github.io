@@ -1,0 +1,12 @@
+name: Jonahtan Paulson
+description: Software Engineer
+
+markdown: redcarpet
+highlighter: pygments
+permalink: /:title/
+
+exclude:
+    - Gemfile
+    - Gemfile.lock
+    - LICENSE
+    - README.md
