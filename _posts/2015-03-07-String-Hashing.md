@@ -47,7 +47,7 @@ Computing the Ps is a one-time cost, and if you can afford to leave the strings 
  
 _If \\(M\\) is \\(10^9+7\\), computing \\(2^{M-1}\\) is expensive!_
 
-That's true. You should precompute all the needed powers of \\(2\\). Specifically: \\(2^0, 2^1, ..., 2^{\|S\|-1}, 2^{M-1}, 2^{M-2}, ..., 2^{M-\|S\|}\\). This is just another \\(2|S|\\) things to precompute, so again, it's cheap.
+That's true. You should precompute all the needed powers of \\(2\\). Specifically: \\(2^0, 2^1, ..., 2^{\|S\|-1}, 2^{M-1}, 2^{M-2}, ..., 2^{M-\|S\|}\\). This is just another \\(2\|S\|\\) things to precompute, so again, it's cheap.
  
 _This doesn't really work. It has a \\(frac{1}{M}\\) chance of being wrong!_
 
@@ -60,8 +60,8 @@ Exercises:
 
 1. Prove that \\(H(S_1)\\) and \\(H(S_2)\\) are independent
 2.
-	A. Prove that if $X$ is uniformly distributed on [0,M), so is X+a for any constant a
-  B. Prove that if $X$ is uniformly distributed on [1,M), so is 2X
-  C. Prove that $H(S)$ is uniformly distributed on [0,M) for any string S
-3. What if we use powers of $m$ instead of powers of $2$ to define $H$? Does anything change?
-4. Show how to pre-compute the required powers of 2 in $$O(|S|)$$ time and space.
+	1. Prove that if \\(X\\) is uniformly distributed on [0,M), so is X+a for any constant a
+	2. Prove that if \\(X\\) is uniformly distributed on [1,M), so is 2X
+	3. Prove that \\(H(S)\\) is uniformly distributed on \\([0,M)\\) for any string S
+3. What if we use powers of $m$ instead of powers of \\(2\\) to define \\(H\\)? Does anything change?
+4. Show how to pre-compute the required powers of 2 in \\(O(\|S\|)\\) time and space.
