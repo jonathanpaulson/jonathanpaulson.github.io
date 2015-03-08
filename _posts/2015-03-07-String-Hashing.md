@@ -51,10 +51,11 @@ That's true. You should precompute all the needed powers of \\(2\\). Specificall
  
 _This doesn't really work. It has a \\(\frac{1}{M}\\) chance of being wrong!_
 
-That's true. If you're worried, you can define \\(H2\\) exactly the same way as \\(H\\) (except that you pick different values for \\(H2(c)\\)), and then say two strings are equal only if \\(H(S\_1)=H(S\_2) \text{ and } H2(S\_1)=H2(S\_2)\\). Then the chance of being wrong is \\(1/M^2 = \frac{1}{10^{18}}\\). Which should make you happy. Unless you're Google or something, in which case maybe you want to define \\(H3\\) and \\(H4\\) and H5.
+That's true. If you're worried, you can define \\(H2\\) exactly the same way as \\(H\\) (except that you pick different values for \\(H2(c)\\)), and then say two strings are equal only if \\(H(S\_1)=H(S\_2) \text{ and } H2(S\_1)=H2(S\_2)\\). Then the chance of being wrong is \\(\frac{1}{M^2} = \frac{1}{10^{18}}\\). Which should make you happy. Unless you're Google or something, in which case maybe you want to define \\(H3\\) and \\(H4\\) and H5.
  
-But it's still wrong! If it has a 1/10^45 chance of being wrong, it could still be wrong.
-No, it really can't. Did you know that cosmic rays actually do flip bits in RAM? (isn't that cool?) Intel estimates this happens about once per month per 256 MB of RAM? So the chance that the cosmic rays will pick the exact clock cycle to flip the exact bit you did the comparison in...is about 1/10^24. But you don't go around saying "My program isn't really right because of cosmic rays". You never even _think_ about cosmic rays. So why are you wasting time worrying about a \\(\frac{1}{10^{45}}\\) chance of failure?
+_But it's still wrong! If it has a \\(\frac{1}{10^{45}}\\) chance of being wrong, it could still be wrong._
+
+No, it really can't. Did you know that cosmic rays actually do flip bits in RAM? (isn't that cool?) Intel estimates this happens about once per month per 256 MB of RAM. So the chance that the cosmic rays will pick the exact clock cycle to flip the exact bit you did the comparison in...is about \\(\\frac{1}{10^{24}}\\). But you don't go around saying "My program isn't really right because of cosmic rays". You never even _think_ about cosmic rays. So why are you wasting time worrying about a \\(\frac{1}{10^{45}}\\) chance of failure?
  
 Exercises:
 
