@@ -32,7 +32,7 @@ Computing the Ps is a one-time cost, and if you can afford to leave the strings 
  
 _If \\(M\\) is \\(10^9+7\\), computing \\(2^{M-1}\\) is expensive!_
 
-That's true. You should precompute all the needed powers of \\(2\\). Specifically: \\(2^0, 2^1, ..., 2^{\|S\|-1}, 2^{M-1}, 2^{M-2}, ..., 2^{M-|S|}\\). This is just another \\(2|S|\\) things to precompute, so again, it's cheap.
+That's true. You should precompute all the needed powers of \\(2\\). Specifically: \\(2^0, 2^1, ..., 2^{\|S\|-1}, 2^{M-1}, 2^{M-2}, ..., 2^{M-\|S\|}\\). This is just another \\(2|S|\\) things to precompute, so again, it's cheap.
  
 _This doesn't really work. It has a \\\frac{1}{M}\\) chance of being wrong!_
 
