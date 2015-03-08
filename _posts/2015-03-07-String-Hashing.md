@@ -64,4 +64,4 @@ Exercises:
   B. Prove that if $X$ is uniformly distributed on [1,M), so is 2X
   C. Prove that $H(S)$ is uniformly distributed on [0,M) for any string S
 3. What if we use powers of $m$ instead of powers of $2$ to define $H$? Does anything change?
-4. Show how to pre-compute the required powers of 2 in $O(|S|)$ time and space.
+4. Show how to pre-compute the required powers of 2 in $$O(|S|)$$ time and space.
