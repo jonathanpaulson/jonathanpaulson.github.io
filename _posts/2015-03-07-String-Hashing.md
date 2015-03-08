@@ -23,22 +23,22 @@ MathJax.Hub.Config({
 # String Hashing
 String equality can be implemented in constant time. strcmp can be implemented in log(n) time. This is pretty cool, since computer scientists will tell you this is provably impossible. It's also pretty useful if you want to do anything with strings ever. Here we go:
  
-Let \\(M\\) be a large prime (\\(10^9 + 7\\) is a good choice). Let's suppose we have a random number generator \\(\text{rand}(A,B)\\) which ouputs a random integer in \\([A,B)\\). We're going to define a hash function \\(H\\) on strings. Start by defining \\(H(c) = rand(1, M)\\) for each character \\(c\\) in the alphabet. Now define \\(H(a_0...a_n) = \sum\_{k=0}^n 2^k H(c\_k)\\) for any string. Then you can show \\(H(S)\\) is a random integer in \\([0,M)\\) for any string \\(S\\), and two different strings get independent hash values.
+Let \\(M\\) be a large prime (\\(10^9 + 7\\) is a good choice). Let's suppose we have a random number generator \\(\text{rand}(A,B)\\) which ouputs a random integer in \\([A,B)\\). We're going to define a hash function \\(H\\) on strings. Start by defining \\(H(c) = \text{rand}(1, M)\\) for each character \\(c\\) in the alphabet. Now define \\(H(a_0...a_n) = \sum\_{k=0}^n 2^k H(c\_k)\\) for any string. Then you can show \\(H(S)\\) is a random integer in \\([0,M)\\) for any string \\(S\\), and two different strings get independent hash values.
  
 So to check if \\(S_1\\) equals \\(S_2\\), you can just compare \\(H(S_1)\\) to \\(H(S_2)\\), and you'll be wrong with probability at most \\(\frac{1}{M}\\).
  
 ### But it takes \\(O(\|S\|)\\) time to compute \\(H(S)\\), so have we really saved anything?
 
 Suppose we are interested in working with the substrings of some string \\(S = a_0...a_n\\). First compute \\(P_i = H(a_0...a_i)\\) for \\(i \in [0,n]\\). Set \\(P\_{-1} = 0\\). Since \\(P\_{i+1} = P\_i + 2^{i+1}\*H[a\_{i+1}]\\), computing all of the Ps only takes \\(|S|\\) time. Then \\(H(a_i...a_j) = \frac{P(j)-P(i-1)}{2^i}\\). Almost. Since we are working mod M, "division" by \\(2^i\\) translates to multiplication by \\(2^{M-1-i}\\).
-So actually \\(H(a_i...a_j) = (P(j)-P(i-1))\*(2^{M-1-i}\\). This is constant time, so we can compute the hash of any substring of S in constant time. So we can compare any two substrings of S in constant time!
+So actually \\(H(a_i...a_j) = (P(j)-P(i-1))\*(2^{M-1-i})\\). This is constant time, so we can compute the hash of any substring of S in constant time. So we can compare any two substrings of S in constant time!
  
 ### What if you care about more than one string?
 
-Suppose you are interested in the strings \\(S_1,...S_n\\). Then define \\(S = S_1+...S_n\\), and play the same game as above with \\(S\\). Now you can compare any of the substrings of \\(S_1,...,S_n\\) against any other substring in constant time.
+Suppose you are interested in the strings \\(S_1,...S_n\\). Then define \\(S = S_1 + ... + S_n\\), and play the same game as above with \\(S\\). Now you can compare any of the substrings of \\(S_1,...,S_n\\) against any other substring in constant time.
  
 ### What if you want...actual comparison?
 
-We've done equality testing; what if we actually want to compare two strings. Let's think about how comparing \\(S_1\\) to \\(S_2\\) actually works. We find the first character that is different between \\(S_1\\) and \\(S_2\\) and compare that. So it's enough to find how many characters of \\(S_1\\) and \\(S_2\\) match. We can binary search for this number, since string equality testing is now constant time. So strcmp is now \\(log(n)\\) time.
+We've done equality testing; what if we actually want to compare two strings. Let's think about how comparing \\(S_1\\) to \\(S_2\\) actually works. We find the first character that is different between \\(S_1\\) and \\(S_2\\) and compare that. So it's enough to find how many characters of \\(S_1\\) and \\(S_2\\) match. We can binary search for this number, since string equality testing is now constant time. So strcmp is now \\(\text{log}(n)\\) time.
  
 ### You cheated! You need to store and compute the Ps at the beginning, and you didn't count that in your "constant time".
 
