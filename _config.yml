@@ -2,7 +2,7 @@ name: Jonahtan Paulson
 description: Software Engineer
 
 markdown: kramdown
-highlighter: pygments
+highlighter: rouge
 permalink: /:title/
 
 exclude:
