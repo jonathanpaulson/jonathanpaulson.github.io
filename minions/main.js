@@ -122,7 +122,7 @@ function make_state() {
   map = new Map();
   selected = null;
   p1 = { units:new Map(), reinforcements: new Map(), money: 0};
-  p2 = { units:new Map(), reinforcements: new Map(), money: 0};
+  p2 = { units:new Map(), reinforcements: new Map(), money: 5};
   for(var x=-n; x<=n; x++) {
     for(var y=-n; y<=n; y++) {
       var z = -(x+y);
