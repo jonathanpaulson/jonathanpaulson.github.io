@@ -14,7 +14,7 @@ var height = size*2;
 var width = Math.sqrt(3)/2 * height;
 
 var necromancer = {
-  name: 'N',
+  name: 'Necromancer',
   move: 1,
   attack: 1,
   defense: 7,
@@ -25,7 +25,7 @@ var necromancer = {
 };
 
 var zombie = {
-  name: 'Z',
+  name: 'Zombie',
   move: 1,
   attack: 1,
   defense: 2,
@@ -36,7 +36,7 @@ var zombie = {
 };
 
 var skeleton = {
-  name: 'S',
+  name: 'Skeleton',
   move: 1,
   attack: 5,
   defense: 2,
@@ -47,7 +47,7 @@ var skeleton = {
 };
 
 var bat = {
-  name: 'B',
+  name: 'Bat',
   move: 3,
   attack: 1,
   defense: 1,
@@ -57,12 +57,22 @@ var bat = {
   abilities: new Set(['flying']),
 };
 
+var warg = {
+  name: 'Warg',
+  move: 3,
+  attack: 2,
+  defense: 3,
+  range: 1,
+  cost: 7,
+  rebate: 5,
+  abilities: new Set([]),
+};
 
-units = new Map();
-[necromancer, zombie, skeleton, bat].forEach(function (u) {
-  units.set(u.name, u);
-});
-unit_names = [zombie.name, necromancer.name, skeleton.name, bat.name];
+units_by_name = new Map();
+units = [zombie, necromancer, skeleton, bat, warg];
+for(var i=0; i<units.length; i++) {
+  units_by_name.set(units[i].name, units[i]);
+}
 
 function rint(lo, hi) {
   return Math.floor(Math.random() * (hi - lo + 1)) + lo;
@@ -261,6 +271,7 @@ function line(ctx, point) {
 function text(ctx, text, point, color) {
   ctx.globalAlpha = 1.0;
   ctx.fillStyle = color;
+  ctx.textAlign = 'center';
   ctx.fillText(text, Math.floor(point.x), Math.floor(point.y));
 }
 function clear_hex(ctx, origin, pos) {
@@ -297,11 +308,11 @@ function show_state(state) {
   var ctx = tech.getContext('2d');
   var origin = {x:50, y:50};
   ctx.clearRect(0, 0, tech.width, tech.height);
-  for(var i=0; i<unit_names.length; i++) {
-    var unit = units.get(unit_names[i]);
+  for(var i=0; i<units.length; i++) {
+    var unit = units[i];
     var pos = {x:i, y:-i};
     var center = hex_center(pos, origin);
-    draw_hex(ctx, hex_center(pos, origin), state.selected==unit_names[i] ? 'yellow' : 'gray');
+    draw_hex(ctx, hex_center(pos, origin), state.selected==units[i].name ? 'yellow' : 'gray');
     text(ctx, unit.name, center, 'black');
     if(state.p1.reinforcements.has(unit.name)) {
       text(ctx, state.p1.reinforcements.get(unit.name), hex_corner(center, size-10, 2), 'red');
@@ -340,7 +351,9 @@ function show_state(state) {
   }
   for(var [k, v] of state.turn_state.them) {
     var k = unhash_point(k);
-    text(ctx, v.unit.name, hex_center(k, origin), state.turn_state.p1 ? 'blue' : 'red');
+    var center = hex_center(k, origin);
+    text(ctx, v.unit.name, center, state.turn_state.p1 ? 'blue' : 'red');
+    text(ctx, v.defense + " / " + v.unit.defense, {x:center.x, y:center.y-15}, state.turn_state.p1 ? 'blue' : 'red');
   }
 
   var info = document.getElementById('info');
@@ -417,6 +430,7 @@ function main() {
           } else {
             if(their_unit.defense <= unit.unit.attack) {
               state.turn_state.them.delete(hash_point(hex));
+              other(state).money += their_unit.unit.rebate;
             } else {
               their_unit.defense -= unit.unit.attack;
             }
@@ -431,7 +445,7 @@ function main() {
     } else {
       // try to spawn units[state.selected] on [hex]
       if(state.selected != null) {
-        var unit = units.get(state.selected);
+        var unit = units_by_name.get(state.selected);
         var terrain_ok = state.map.get(hash_point(hex))!='water' || unit.abilities.has('flying');
         var not_occupied = !state.turn_state.me.has(hash_point(hex)) && !state.turn_state.them.has(hash_point(hex));
         var has_money = current(state).reinforcements.has(unit.name) || current(state).money >= unit.cost;
@@ -452,16 +466,17 @@ function main() {
 
   var tech = document.getElementById('tech');
   tech.addEventListener('mousedown', function(e) {
+    var rect = tech.getBoundingClientRect();
     var pos = {
-      x : e.clientX - tech.offsetLeft - 50,
-      y : -(e.clientY - tech.offsetTop - 50)
+      x : e.clientX - rect.left - 50,
+      y : -(e.clientY - rect.top - 50)
     };
     var x = (pos.x * Math.sqrt(3)/3 - pos.y/3) / size;
     var z = pos.y*(2/3)/size;
     var y = -(x+z);
     var hex = hex_round({x, y});
     if(state.turn_state.spawn && hex.y == -hex.x) {
-      state.selected = unit_names[hex.x];
+      state.selected = units[hex.x].name;
     }
     show_state(state);
   });
