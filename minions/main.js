@@ -8,6 +8,18 @@
 // generals
 // team chat
 
+/*
+graveyard
+imp
+witch
+shrieker
+haunt
+wraith
+fiend
+fallen angel
+shadowlord
+*/
+
 var size = 40;
 var n = 5;
 var height = size*2;
@@ -35,6 +47,28 @@ var zombie = {
   abilities: new Set(['slow'])
 };
 
+var acolyte = {
+  name: 'Acolyte',
+  move: 2,
+  attack: 0,
+  defense: 2,
+  range: 1,
+  cost: 5,
+  rebate: 3,
+  abilities: new Set(['slow']),
+};
+
+var graveyard = {
+  name: 'Graveyard',
+  move: 0,
+  attack: 0,
+    defense: 4,
+    range: 0,
+    cost: 4,
+    rebate: 1,
+    abilities: new Set(['far_spawn', 'spawn_zombie']),
+};
+
 var skeleton = {
   name: 'Skeleton',
   move: 1,
@@ -57,6 +91,17 @@ var bat = {
   abilities: new Set(['flying']),
 };
 
+var ghost = {
+  name: 'Ghost',
+  move: 1,
+  attack: 1,
+  defense: 4,
+  range: 1,
+  cost: 3,
+  rebate: 0,
+  abilities: new Set(['flying', 'persistent']),
+};
+
 var warg = {
   name: 'Warg',
   move: 3,
@@ -69,7 +114,7 @@ var warg = {
 };
 
 units_by_name = new Map();
-units = [zombie, necromancer, skeleton, bat, warg];
+units = [zombie, acolyte, graveyard, skeleton, bat, ghost, warg];
 for(var i=0; i<units.length; i++) {
   units_by_name.set(units[i].name, units[i]);
 }
@@ -131,15 +176,22 @@ function terrain_color(terrain) {
 function make_state() {
   map = new Map();
   selected = null;
-  p1 = { units:new Map(), reinforcements: new Map(), money: 0};
-  p2 = { units:new Map(), reinforcements: new Map(), money: 5};
+  p1 = { units:new Map(), reinforcements: new Map(), money: 0, tech:new Map()};
+  p2 = { units:new Map(), reinforcements: new Map(), money: 5, tech:new Map()};
+
+  p1.tech.set(zombie.name, 2);
+  p1.tech.set(acolyte.name, 2);
+
+  p2.tech.set(zombie.name, 2);
+  p2.tech.set(acolyte.name, 2);
+
   for(var x=-n; x<=n; x++) {
     for(var y=-n; y<=n; y++) {
       var z = -(x+y);
       if(Math.abs(z) > n) { continue; }
       var terrain =
         Math.random() < 0.2 ? 'water' :
-        Math.random() < 0.05 ? 'mana' :
+        Math.random() < 0.1 ? 'mana' :
         'grass';
       map.set(hash_point({x,y}), terrain);
     }
@@ -320,6 +372,12 @@ function show_state(state) {
     if(state.p2.reinforcements.has(unit.name)) {
       text(ctx, state.p2.reinforcements.get(unit.name), hex_corner(center, size-10, 0), 'blue');
     }
+    if(state.p1.tech.has(unit.name)) {
+      text(ctx, '*'.repeat(state.p1.tech.get(unit.name)), hex_corner(center, size-10, 3), 'red');
+    }
+    if(state.p2.tech.has(unit.name)) {
+      text(ctx, '*'.repeat(state.p2.tech.get(unit.name)), hex_corner(center, size-10, 5), 'blue');
+    }
   }
 
   var board = document.getElementById('board');
@@ -397,6 +455,13 @@ function main() {
         other(state).units.set(k, v.unit);
       }
       state.turn_state = make_turn_state(other(state).units, current(state).units, !state.turn_state.p1);
+      for(var [k, v] of state.turn_state.me) {
+        if(v.unit.abilities.has('spawn_zombie')) {
+          // TODO: the zombie should have to spawn within [spawn_range] of [k]
+          // (2 if [v.unit.abilities.has('far_spawn')]; 1 if [v.unit.abilities.has('spawn')])
+          add_multi(current(state).reinforcements, zombie.name);
+        }
+      }
     }
     show_state(state);
   });
