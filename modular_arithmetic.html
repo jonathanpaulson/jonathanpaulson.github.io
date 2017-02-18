@@ -257,7 +257,7 @@ Since each of the $x_i$ is coprime to $n$, so is their product, so we can apply 
 
 <h2> Division </h2>
 Now we can handle division. This is tricky:
-$\frac{x}{y} \not \equiv_{P} \frac{x \mod p}{y \mod p}$. For example, $\frac{10}{5} \equiv_3 2$, but $\frac{10 \mod 3}{5 \mod 3} = \frac{1}{2}$ isn't even an integer.
+$\frac{x}{y} \not \equiv_{P} \frac{x \mod P}{y \mod P}$. For example, $\frac{10}{5} \equiv_3 2$, but $\frac{10 \mod 3}{5 \mod 3} = \frac{1}{2}$ isn't even an integer.
 It turns out that when $P$ is prime, there is a sensible definition:
 $\frac{x}{y} \equiv_{P} x y^{-1}$, where $y^{-1}$ is the number satisfying $y y^{-1} = 1$.
 
