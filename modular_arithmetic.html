@@ -293,7 +293,7 @@ The obvious hope is not true: $x^y \not \equiv_{P} (x \mod p)^{y \mod p}$.
 For example, $2^4 \equiv_3 1$, but $2^{4 \mod 3} = 2^1 = 2$.
 
 Because multiplication behaves nicely, we know $x^y \equiv_{P} (x \mod p)^y$.
-And if $x$ is coprime to $p$, then Euler's theorem tells us $x^y \equiv_{P} (x \mod y)^{y \mod p}$.
+And if $x$ is coprime to $p$, then Euler's theorem tells us $x^y \equiv_{P} (x \mod y)^{y \mod \phi(p)}$.
 If $x$ is not coprime to $p$, the story is more complicated. Perhaps I'll go into it another time.
 
 <p><b>Exercise:</b> Define
