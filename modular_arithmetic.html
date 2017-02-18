@@ -305,14 +305,14 @@ Because multiplication behaves nicely, we know $x^y \equiv_{P} (x \mod p)^y$.
 And if $x$ is coprime to $p$, then Euler's theorem tells us $x^y \equiv_{P} (x \mod y)^{y \mod \phi(p)}$.
 If $x$ is not coprime to $p$, the story is more complicated. Perhaps I'll go into it another time.
 
-<p><b>Exercise 1:</b><p>
+<h3>Exercise 1</h3>
 Define $T(a,n) = \begin{cases}0 & n=0 \\ a^{T(a, n-1)} & \text{otherwise} \end{cases}$
 <br> $T(a,n)$ is a "power tower" of $n$ copies of $a$. For example $T(2,4) = 2^{2^{2^2}} = 2^{2^4} = 2^{16} = 65536$.
 <br> What is $T(7, 10^9) \text{ mod } (10^9+7)$?
 
 <p><input type=text id=e1><img id="e1_i" style="margin-left:5px" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" width=15 height=15/>
 
-<p><b>Exercise 2:</b><p>
+<h3> Exercise 2</h3>
 Define $C(n,k) = \frac{n!}{k! (n-k)!}$. What is $C(2000,1000) \text{ mod } (10^9+7)$?
 
 <p><input type=text id=e2><img id="e2_i" style="margin-left:5px" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" width=15 height=15/>
